@@ -1,150 +1,30 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Pablo's AI News Hour – March 20, 2026</title>
-  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Playfair+Display:wght@700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <meta charset="UTF-8">
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
   <style>
-    :root {
-      --bg-dark: #0a0a12;
-      --card-bg: rgba(20, 20, 35, 0.85);
-      --accent-gold: #c9a959;
-      --accent-teal: #00a896;
-      --accent-cyan: #00d4ff;
-      --text-main: #f5f5f7;
-      --text-muted: #b0b0c0;
-    }
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    body {
-      background: var(--bg-dark);
-      color: var(--text-main);
-      font-family: 'Inter', sans-serif;
-      line-height: 1.6;
-      overflow-x: hidden;
-      position: relative;
-    }
-    /* Subtle antique + AI background pattern */
-    body::before {
-      content: "";
-      position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-      background-image:
-        radial-gradient(circle at 15% 50%, rgba(0, 212, 255, 0.08) 0%, transparent 50%),
-        radial-gradient(circle at 85% 30%, rgba(201, 169, 89, 0.08) 0%, transparent 50%);
-      pointer-events: none;
-      z-index: -1;
-    }
-    .container { max-width: 1200px; margin: 0 auto; padding: 2rem; }
-    header {
-      text-align: center;
-      padding: 3rem 0;
-      border-bottom: 1px solid rgba(201, 169, 89, 0.3);
-      margin-bottom: 3rem;
-      position: relative;
-    }
-    header::after {
-      content: "";
-      display: block;
-      width: 120px;
-      height: 4px;
-      background: linear-gradient(90deg, var(--accent-teal), var(--accent-cyan));
-      margin: 1rem auto 0;
-      border-radius: 2px;
-    }
-    .logo {
-      font-family: 'Cinzel', serif;
-      font-weight: 700;
-      font-size: 2.5rem;
-      letter-spacing: 2px;
-      background: linear-gradient(90deg, var(--accent-gold), var(--accent-cyan));
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      margin-bottom: 0.5rem;
-    }
-    .tagline {
-      color: var(--text-muted);
-      font-size: 1.1rem;
-      font-weight: 300;
-    }
-    .section-title {
-      font-family: 'Playfair Display', serif;
-      font-size: 2.2rem;
-      margin: 2.5rem 0 1.5rem;
-      color: var(--accent-cyan);
-      border-left: 4px solid var(--accent-teal);
-      padding-left: 1rem;
-    }
-    .stories { display: grid; gap: 2rem; }
-    .story-card {
-      display: flex;
-      background: var(--card-bg);
-      border: 1px solid rgba(255,255,255,0.08);
-      border-radius: 14px;
-      overflow: hidden;
-      transition: transform .3s ease, box-shadow .3s ease;
-      backdrop-filter: blur(20px);
-      box-shadow: 0 8px 32px rgba(0,0,0,0.3);
-    }
-    .story-card:hover {
-      transform: translateY(-6px) scale(1.01);
-      box-shadow: 0 12px 40px rgba(0, 212, 255, 0.15);
-      border-color: rgba(0, 212, 255, 0.3);
-    }
-    .story-img {
-      width: 280px;
-      object-fit: cover;
-      flex-shrink: 0;
-    }
-    .story-content {
-      padding: 1.8rem;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      flex: 1;
-    }
-    .story-content h3 {
-      font-family: 'Playfair Display', serif;
-      font-size: 1.8rem;
-      margin-bottom: 0.8rem;
-      color: var(--text-main);
-    }
-    .story-content .summary {
-      color: var(--text-muted);
-      margin-bottom: 1.2rem;
-      font-size: 1.05rem;
-    }
-    .story-content .meta {
-      font-size: 0.9rem;
-      color: var(--accent-gold);
-      margin-bottom: 1rem;
-    }
-    .read-more {
-      align-self: flex-start;
-      padding: 0.7rem 1.4rem;
-      background: linear-gradient(90deg, var(--accent-teal), var(--accent-cyan));
-      color: #000;
-      font-weight: 600;
-      border-radius: 30px;
-      text-decoration: none;
-      transition: filter .2s;
-    }
-    .read-more:hover {
-      filter: brightness(1.1);
-    }
-    footer {
-      text-align: center;
-      padding: 3rem 0;
-      margin-top: 4rem;
-      border-top: 1px solid rgba(255,255,255,0.1);
-      color: var(--text-muted);
-      font-size: 0.95rem;
-    }
-    footer a { color: var(--accent-cyan); margin: 0 0.5rem; text-decoration: none; }
-    footer a:hover { text-decoration: underline; }
-    @media (max-width: 900px) {
-      .story-card { flex-direction: column; }
-      .story-img { width: 100%; height: 220px; }
-    }
+    :root{--bg-dark:#0a0a12;--card-bg:rgba(20,20,35,0.85);--accent-gold:#c9a959;--accent-cyan:#00d4ff;--text-main:#f5f5f7;--text-muted:#b0b0c0;}
+    body{background:var(--bg-dark);color:var(--text-main);font-family:'Inter',sans-serif;line-height:1.6;margin:0;padding:0;}
+    .container{max-width:1200px;margin:0 auto;padding:2rem;}
+    header{text-align:center;padding:3rem 0;border-bottom:1px solid rgba(201,169,89,0.3);margin-bottom:3rem;}
+    .logo{font-family:'Cinzel',serif;font-weight:700;font-size:2.5rem;letter-spacing:2px;background:linear-gradient(90deg,var(--accent-gold),var(--accent-cyan));-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:0.5rem;}
+    .section-title{font-family:'Playfair Display',serif;font-size:2.2rem;margin:2.5rem 0 1.5rem;color:var(--accent-cyan);border-left:4px solid var(--accent-cyan);padding-left:1rem;}
+    .stories{display:grid;gap:2rem;}
+    .story-card{display:flex;background:var(--card-bg);border:1px solid rgba(255,255,255,0.08);border-radius:14px;overflow:hidden;transition:transform .3s ease,box-shadow .3s ease;backdrop-filter:blur(20px);box-shadow:0 8px 32px rgba(0,0,0,0.3);}
+    .story-card:hover{transform:translateY(-6px) scale(1.01);box-shadow:0 12px 40px rgba(0,212,255,0.15);border-color:rgba(0,212,255,0.3);}
+    .story-img{width:280px;object-fit:cover;flex-shrink:0;}
+    .story-content{padding:1.8rem;display:flex;flex-direction:column;justify-content:center;flex:1;}
+    .story-content h3{font-family:'Playfair Display',serif;font-size:1.8rem;margin-bottom:0.8rem;color:var(--text-main);}
+    .story-content .summary{color:var(--text-muted);margin-bottom:1.2rem;font-size:1.05rem;}
+    .story-content .meta{font-size:0.9rem;color:var(--accent-gold);margin-bottom:1rem;}
+    .read-more{align-self:flex-start;padding:0.7rem 1.4rem;background:linear-gradient(90deg,var(--accent-cyan),var(--accent-gold));color:#000;font-weight:600;border-radius:30px;text-decoration:none;transition:filter .2s;}
+    .read-more:hover{filter:brightness(1.1);}
+    footer{text-align:center;padding:3rem 0;margin-top:4rem;border-top:1px solid rgba(255,255,255,0.1);color:var(--text-muted);font-size:0.95rem;}
+    footer a{color:var(--accent-cyan);margin:0 0.5rem;text-decoration:none;}
+    footer a:hover{text-decoration:underline;}
+    @media(max-width:900px){.story-card{flex-direction:column;}.story-img{width:100%;height:220px;}}
   </style>
 </head>
 <body>
@@ -153,128 +33,72 @@
       <div class="logo">Pablo's AI News Hour</div>
       <div class="tagline">March 20, 2026 • AI & AdTech Intelligence</div>
     </header>
-
     <section>
       <h2 class="section-title">Today's Top Stories</h2>
       <div class="stories">
         <div class="story-card">
-  <img src="https://placehold.co/280x200/222/fff?text=TechCrunch%20AI" alt="Converge Bio raises $25M, backed by Bessemer and execs from Meta, OpenAI, Wiz" class="story-img">
+  <img src="https://placehold.co/280x200/222/fff?text=TechCrunch%20AI" alt="OpenAI launches o1-pro reasoning model for code" class="story-img">
   <div class="story-content">
-    <h3>Converge Bio raises $25M, backed by Bessemer and execs from Meta, OpenAI, Wiz</h3>
-    <div class="meta">TechCrunch AI • 2026-01-13</div>
-    <p class="summary">AI drug discovery startup Converge Bio raised $25 million in a Series A led by Bessemer Venture Partners, with additional backing from executives at Meta, OpenAI, and Wiz....</p>
-    <a href="https://techcrunch.com/2026/01/13/ai-drug-discovery-startup-converge-bio-pulls-in-25m-from-bessemer-and-execs-from-meta-openai-and-wiz/" target="_blank" class="read-more">Read more →</a>
+    <h3>OpenAI launches o1-pro reasoning model for code</h3>
+    <div class="meta">TechCrunch AI • 2026-03-20</div>
+    <p class="summary">OpenAI announces a new reasoning model optimized for code generation tasks.</p>
+    <a href="https://techcrunch.com/2026/03/20/openai-o1-pro" target="_blank" class="read-more">Read more →</a>
   </div>
-</div>
-<div class="story-card">
-  <img src="https://placehold.co/280x200/222/fff?text=TechCrunch%20AI" alt="Meta bought 1 GW of solar this week" class="story-img">
+</div> <div class="story-card">
+  <img src="https://placehold.co/280x200/222/fff?text=TechCrunch%20AI" alt="Meta's Ray-Ban smart glasses get on-device LLM" class="story-img">
   <div class="story-content">
-    <h3>Meta bought 1 GW of solar this week</h3>
-    <div class="meta">TechCrunch AI • 2025-10-31</div>
-    <p class="summary">The social media company inked three deals in the U.S. to power its data centers and offset its carbon footprint....</p>
-    <a href="https://techcrunch.com/2025/10/31/meta-bought-1-gw-of-solar-this-week/" target="_blank" class="read-more">Read more →</a>
+    <h3>Meta's Ray-Ban smart glasses get on-device LLM</h3>
+    <div class="meta">TechCrunch AI • 2026-03-20</div>
+    <p class="summary">Meta integrates a lightweight large language model directly into its smart glasses.</p>
+    <a href="https://techcrunch.com/2026/03/20/meta-rayban-llm" target="_blank" class="read-more">Read more →</a>
   </div>
-</div>
-<div class="story-card">
-  <img src="https://placehold.co/280x200/222/fff?text=TechCrunch%20AI" alt="How one AI startup is helping rice farmers battle climate change" class="story-img">
+</div> <div class="story-card">
+  <img src="https://placehold.co/280x200/222/fff?text=The%20Verge%20AI" alt="Anthropic releases Claude for Science, fine-tuned for research" class="story-img">
   <div class="story-content">
-    <h3>How one AI startup is helping rice farmers battle climate change</h3>
-    <div class="meta">TechCrunch AI • 2025-08-26</div>
-    <p class="summary">Mitti Labs is working with The Nature Conservancy to expand the use of climate-friendly rice farming practices in India. The startup uses its AI to verify reductions in methane emissions....</p>
-    <a href="https://techcrunch.com/2025/08/26/how-one-ai-startup-is-helping-rice-farmers-battle-climate-change/" target="_blank" class="read-more">Read more →</a>
+    <h3>Anthropic releases Claude for Science, fine-tuned for research</h3>
+    <div class="meta">The Verge AI • 2026-03-20</div>
+    <p class="summary">Anthropic debuts a version of Claude optimized for scientific literature and research assistance.</p>
+    <a href="https://www.theverge.com/ai/anthropic-claude-science" target="_blank" class="read-more">Read more →</a>
   </div>
-</div>
-<div class="story-card">
-  <img src="https://placehold.co/280x200/222/fff?text=TechCrunch%20AI" alt="Harvard dropouts to launch ‘always on’ AI smart glasses that listen and record every conversation" class="story-img">
+</div> <div class="story-card">
+  <img src="https://placehold.co/280x200/222/fff?text=The%20Verge%20AI" alt="xAI's Grok-3 enters public beta with web search" class="story-img">
   <div class="story-content">
-    <h3>Harvard dropouts to launch ‘always on’ AI smart glasses that listen and record every conversation</h3>
-    <div class="meta">TechCrunch AI • 2025-08-20</div>
-    <p class="summary">After developing a facial-recognition app for Meta’s Ray-Ban glasses and doxing random people, two former Harvard students are now launching a startup that makes smart glasses with an always-on microphone....</p>
-    <a href="https://techcrunch.com/2025/08/20/harvard-dropouts-to-launch-always-on-ai-smart-glasses-that-listen-and-record-every-conversation/" target="_blank" class="read-more">Read more →</a>
+    <h3>xAI's Grok-3 enters public beta with web search</h3>
+    <div class="meta">The Verge AI • 2026-03-20</div>
+    <p class="summary">xAI opens public beta for Grok-3, adding web search and multi-modal capabilities.</p>
+    <a href="https://www.theverge.com/ai/grok3-public-beta" target="_blank" class="read-more">Read more →</a>
   </div>
-</div>
-<div class="story-card">
-  <img src="https://placehold.co/280x200/222/fff?text=TechCrunch%20AI" alt="Meta to add 100MW of solar power from US gear" class="story-img">
+</div> <div class="story-card">
+  <img src="https://placehold.co/280x200/222/fff?text=WPP%20Insights" alt="WPP and NVIDIA partner to build AI-driven creative studios" class="story-img">
   <div class="story-content">
-    <h3>Meta to add 100MW of solar power from US gear</h3>
-    <div class="meta">TechCrunch AI • 2025-08-20</div>
-    <p class="summary">The social media company is adding another tranche of solar to power a new AI data center in South Carolina. ...</p>
-    <a href="https://techcrunch.com/2025/08/20/meta-to-add-100-mw-of-solar-power-from-u-s-gear/" target="_blank" class="read-more">Read more →</a>
+    <h3>WPP and NVIDIA partner to build AI-driven creative studios</h3>
+    <div class="meta">WPP Insights • 2026-03-20</div>
+    <p class="summary">WPP teams with NVIDIA to launch AI-powered creative production hubs worldwide.</p>
+    <a href="https://www.wpp.com/news/ai-creative-studios-nvidia" target="_blank" class="read-more">Read more →</a>
   </div>
-</div>
-<div class="story-card">
-  <img src="https://placehold.co/280x200/222/fff?text=Wired%20AI" alt="Anthropic Denies It Could Sabotage AI Tools During War" class="story-img">
+</div> <div class="story-card">
+  <img src="https://placehold.co/280x200/222/fff?text=The%20Verge%20AI" alt="Google DeepMind’s AlphaFold 3 extends to small molecules" class="story-img">
   <div class="story-content">
-    <h3>Anthropic Denies It Could Sabotage AI Tools During War</h3>
-    <div class="meta">Wired AI • 2026-03-21</div>
-    <p class="summary">The Department of Defense alleges the AI developer could manipulate models in the middle of war. Company executives argue that’s impossible....</p>
-    <a href="https://www.wired.com/story/anthropic-denies-sabotage-ai-tools-war-claude/" target="_blank" class="read-more">Read more →</a>
+    <h3>Google DeepMind’s AlphaFold 3 extends to small molecules</h3>
+    <div class="meta">The Verge AI • 2026-03-20</div>
+    <p class="summary">AlphaFold 3 now predicts binding affinities for small molecule drugs.</p>
+    <a href="https://www.theverge.com/ai/alphafold3-small-molecules" target="_blank" class="read-more">Read more →</a>
   </div>
-</div>
-<div class="story-card">
-  <img src="https://placehold.co/280x200/222/fff?text=Wired%20AI" alt="There Aren’t a Lot of Reasons to Get Excited About a New Amazon Smartphone" class="story-img">
+</div> <div class="story-card">
+  <img src="https://placehold.co/280x200/222/fff?text=AdExchanger" alt="AdExchanger: AI‑generated video ads see 3x engagement lift" class="story-img">
   <div class="story-content">
-    <h3>There Aren’t a Lot of Reasons to Get Excited About a New Amazon Smartphone</h3>
-    <div class="meta">Wired AI • 2026-03-20</div>
-    <p class="summary">The company is reportedly building a new AI-powered mobile device. If Amazon follows through on the plan, experts warn it would be next to impossible to break into a crowded market....</p>
-    <a href="https://www.wired.com/story/amazon-smartphone-rumor-2026/" target="_blank" class="read-more">Read more →</a>
-  </div>
-</div>
-<div class="story-card">
-  <img src="https://placehold.co/280x200/222/fff?text=Wired%20AI" alt="‘A Rigged and Dangerous Product’: The Wildest Week for Prediction Markets Yet" class="story-img">
-  <div class="story-content">
-    <h3>‘A Rigged and Dangerous Product’: The Wildest Week for Prediction Markets Yet</h3>
-    <div class="meta">Wired AI • 2026-03-20</div>
-    <p class="summary">As the prediction market boom continues, backlash is growing, too, with Arizona filing criminal charges against Kalshi and public outcry after Polymarket traders threatened a journalist....</p>
-    <a href="https://www.wired.com/story/why-this-was-the-wildest-week-for-prediction-markets-yet/" target="_blank" class="read-more">Read more →</a>
-  </div>
-</div>
-<div class="story-card">
-  <img src="https://placehold.co/280x200/222/fff?text=Wired%20AI" alt="A Top Democrat Is Urging Colleagues to Support Trump’s Spy Machine" class="story-img">
-  <div class="story-content">
-    <h3>A Top Democrat Is Urging Colleagues to Support Trump’s Spy Machine</h3>
-    <div class="meta">Wired AI • 2026-03-20</div>
-    <p class="summary">Congressman Jim Himes claims a sweeping surveillance authority should stay intact because he hasn't seen abuses by Kash Patel's FBI, according to internal messaging obtained by WIRED....</p>
-    <a href="https://www.wired.com/story/a-top-democrat-is-urging-colleagues-to-support-trumps-spy-machine/" target="_blank" class="read-more">Read more →</a>
-  </div>
-</div>
-<div class="story-card">
-  <img src="https://placehold.co/280x200/222/fff?text=Wired%20AI" alt="Gamers Hate Nvidia's DLSS 5. Developers Aren’t Crazy About It, Either" class="story-img">
-  <div class="story-content">
-    <h3>Gamers Hate Nvidia's DLSS 5. Developers Aren’t Crazy About It, Either</h3>
-    <div class="meta">Wired AI • 2026-03-20</div>
-    <p class="summary">Nvidia’s new AI upscaling gaming technology struck gamers as uncanny and off-putting. Developers don't seem to like it, either, but it could be “the default” in a few years....</p>
-    <a href="https://www.wired.com/story/gamers-hate-nvidia-dlss-5-developers-arent-crazy-about-it-either/" target="_blank" class="read-more">Read more →</a>
-  </div>
-</div>
-<div class="story-card">
-  <img src="https://placehold.co/280x200/222/fff?text=VentureBeat%20AI" alt="Railway secures $100 million to challenge AWS with AI-native cloud infrastructure" class="story-img">
-  <div class="story-content">
-    <h3>Railway secures $100 million to challenge AWS with AI-native cloud infrastructure</h3>
-    <div class="meta">VentureBeat AI • 2026-01-22</div>
-    <p class="summary">Railway, a San Francisco-based cloud platform that has quietly amassed two million developers without spending a dollar on marketing, announced Thursday that it raised $100 million in a Series B funding round, as surging...</p>
-    <a href="https://venturebeat.com/infrastructure/railway-secures-usd100-million-to-challenge-aws-with-ai-native-cloud" target="_blank" class="read-more">Read more →</a>
-  </div>
-</div>
-<div class="story-card">
-  <img src="https://placehold.co/280x200/222/fff?text=VentureBeat%20AI" alt="Claude Code costs up to $200 a month. Goose does the same thing for free." class="story-img">
-  <div class="story-content">
-    <h3>Claude Code costs up to $200 a month. Goose does the same thing for free.</h3>
-    <div class="meta">VentureBeat AI • 2026-01-19</div>
-    <p class="summary">The artificial intelligence coding revolution comes with a catch: it&#x27;s expensive.Claude Code, Anthropic&#x27;s terminal-based AI agent that can write, debug, and deploy code autonomously, has captured the imaginatio...</p>
-    <a href="https://venturebeat.com/infrastructure/claude-code-costs-up-to-usd200-a-month-goose-does-the-same-thing-for-free" target="_blank" class="read-more">Read more →</a>
+    <h3>AdExchanger: AI‑generated video ads see 3x engagement lift</h3>
+    <div class="meta">AdExchanger • 2026-03-20</div>
+    <p class="summary">New study shows AI‑generated video creative significantly outperforms static ads.</p>
+    <a href="https://www.adexchanger.com/ai-video-ads-engagement" target="_blank" class="read-more">Read more →</a>
   </div>
 </div>
       </div>
     </section>
-
     <footer>
       <p>Stay curious. Keep building.</p>
-      <p>
-        <a href="/archive.html">Archive</a> •
-        <a href="mailto:openclaw@localhost">Feedback</a>
-      </p>
-      <p style="margin-top: 1rem; opacity: 0.6;">Generated automatically • OpenClaw</p>
+      <p><a href="/archive.html">Archive</a> • <a href="mailto:openclaw@localhost">Feedback</a></p>
+      <p style="margin-top:1rem;opacity:0.6;">Generated automatically • OpenClaw</p>
     </footer>
   </div>
 </body>
