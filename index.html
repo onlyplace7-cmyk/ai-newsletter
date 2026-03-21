@@ -1,0 +1,1023 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pablo's AI News Hour</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-dark: #0a0a12;
+            --card-dark: #0a0a12;
+            --text-light: #f5f5f7;
+            --text-muted: #a8a8c8;
+            --gold-soft: #c9a959;
+            --gold-bright: #e8d48a;
+            --teal: #00a896;
+            --cyan-accent: #00d4ff;
+            --cyan-soft: #7ee8fa;
+            --glass-bg: rgba(10, 10, 18, 0.85);
+            --glass-border: rgba(255, 255, 255, 0.12);
+            --glow-cyan: rgba(0, 212, 255, 0.4);
+            --glow-gold: rgba(201, 169, 89, 0.3);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            line-height: 1.6;
+            color: var(--text-light);
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #1a1a2e 100%);
+        }
+
+        /* Grain texture overlay */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -3;
+            opacity: 0.025;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+            pointer-events: none;
+        }
+
+        /* Muted antique + AI background elements */
+        body::after {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -2;
+            opacity: 0.04;
+            background:
+                repeating-linear-gradient(
+                    45deg,
+                    transparent,
+                    transparent 3px,
+                    rgba(139, 119, 80, 0.02) 3px,
+                    rgba(139, 119, 80, 0.02) 6px
+                ),
+                repeating-linear-gradient(
+                    -45deg,
+                    transparent,
+                    transparent 3px,
+                    rgba(139, 119, 80, 0.015) 3px,
+                    rgba(139, 119, 80, 0.015) 6px
+                ),
+                radial-gradient(ellipse at top left, rgba(201, 169, 89, 0.03) 0%, transparent 50%),
+                radial-gradient(ellipse at bottom right, rgba(139, 119, 80, 0.025) 0%, transparent 50%);
+            background-size: 100% 100%, 100% 100%, cover, cover;
+            pointer-events: none;
+        }
+
+        /* Dark scrim overlay behind content area */
+        .content-scrim {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: rgba(10, 10, 18, 0.92);
+            pointer-events: none;
+        }
+
+        /* Header with animated gradient border and glowing logo */
+        header {
+            position: relative;
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--glass-border);
+            padding: 3.5rem 2rem;
+            text-align: center;
+            overflow: hidden;
+        }
+
+        header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(
+                90deg,
+                var(--gold-soft),
+                var(--cyan-accent),
+                var(--teal),
+                var(--gold-soft),
+                var(--cyan-accent)
+            );
+            background-size: 200% 100%;
+            animation: gradientFlow 5s ease-in-out infinite;
+            box-shadow: 0 0 15px var(--glow-cyan), 0 0 30px var(--glow-gold);
+        }
+
+        @keyframes gradientFlow {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        .logo {
+            font-family: 'Cinzel', serif;
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 0.75rem;
+            letter-spacing: 2px;
+            background: linear-gradient(135deg, var(--gold-soft) 0%, var(--gold-bright) 50%, var(--gold-soft) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-shadow: 0 0 25px var(--glow-gold), 0 0 50px rgba(201, 169, 89, 0.15);
+            animation: softGlow 3.5s ease-in-out infinite alternate;
+            position: relative;
+            display: inline-block;
+        }
+
+        @keyframes softGlow {
+            0% { filter: brightness(1) drop-shadow(0 0 15px rgba(201, 169, 89, 0.3)); }
+            100% { filter: brightness(1.1) drop-shadow(0 0 25px rgba(201, 169, 89, 0.5)); }
+        }
+
+        .logo::after {
+            content: '✦';
+            position: absolute;
+            top: -8px;
+            right: -25px;
+            font-size: 1.2rem;
+            color: var(--cyan-accent);
+            text-shadow: 0 0 12px var(--cyan-accent);
+            animation: spinSlow 12s linear infinite;
+        }
+
+        @keyframes spinSlow {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .date {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.15rem;
+            color: var(--cyan-soft);
+            font-weight: 400;
+            margin-bottom: 0.75rem;
+            letter-spacing: 1px;
+            text-shadow: 0 0 10px var(--glow-cyan);
+        }
+
+        .tagline {
+            font-size: 1.2rem;
+            font-weight: 300;
+            color: var(--text-muted);
+            max-width: 700px;
+            margin: 0 auto;
+            line-height: 1.7;
+        }
+
+        /* Container */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 3rem 2rem 5rem;
+        }
+
+        /* Scroll-reveal animation classes */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Glassmorphism section cards with increased padding */
+        section {
+            margin-bottom: 5rem;
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 18px;
+            padding: 3rem;
+            box-shadow:
+                0 8px 32px rgba(0, 0, 0, 0.3),
+                inset 0 1px 0 rgba(255, 255, 255, 0.08);
+            transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            position: relative;
+            overflow: hidden;
+        }
+
+        section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--gold-soft), var(--cyan-accent), transparent);
+            opacity: 0.7;
+        }
+
+        section:hover {
+            transform: translateY(-4px);
+            box-shadow:
+                0 16px 48px rgba(0, 212, 255, 0.15),
+                0 8px 32px rgba(201, 169, 89, 0.1),
+                inset 0 1px 0 rgba(255, 255, 255, 0.12);
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+
+        h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            color: var(--gold-soft);
+            position: relative;
+            display: inline-block;
+        }
+
+        h2::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 80px;
+            height: 3px;
+            background: linear-gradient(90deg, var(--gold-soft), var(--cyan-accent));
+            border-radius: 2px;
+            box-shadow: 0 0 15px var(--glow-gold);
+        }
+
+        /* Ornate section divider */
+        .ornate-divider {
+            width: 100%;
+            height: 28px;
+            margin: 2.5rem 0;
+            background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='28' viewBox='0 0 200 28'%3E%3Cpath d='M2 14h196M20 14c0-6.627-5.373-12-12-12s-12 5.373-12 12 5.373 12 12 12 12-5.373 12-12z' fill='none' stroke='%23c9a959' stroke-width='1' opacity='0.7'/%3E%3Cpath d='M50 14l-4 -8M60 14l-4 8M80 14l-4 -8M90 14l-4 8M110 14l-4 -8M120 14l-4 8M140 14l-4 -8M150 14l-4 8M170 14l-4 -8M180 14l-4 8' stroke='%2300d4ff' stroke-width='1' opacity='0.5'/%3E%3Ccircle cx='100' cy='14' r='4' fill='%23c9a959'/%3E%3C/svg%3E") center no-repeat;
+            background-size: 200px 28px;
+            opacity: 0.8;
+        }
+
+        /* Top Stories - Glass cards */
+        .stories-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
+            gap: 2.5rem;
+        }
+
+        .story-card {
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            overflow: hidden;
+            transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            background: rgba(255, 255, 255, 0.03);
+            position: relative;
+        }
+
+        .story-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at var(--mouse-x, 50%) var(--mouse-y, 50%), var(--glow-cyan) 0%, transparent 60%);
+            opacity: 0;
+            transition: opacity 0.4s ease;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .story-card:hover::before {
+            opacity: 0.12;
+        }
+
+        .story-card:hover {
+            transform: translateY(-10px);
+            box-shadow:
+                0 24px 60px rgba(0, 212, 255, 0.18),
+                0 10px 30px rgba(201, 169, 89, 0.12),
+                0 0 0 1px rgba(255, 255, 255, 0.25);
+            border-color: rgba(0, 212, 255, 0.5);
+        }
+
+        .story-card > * {
+            position: relative;
+            z-index: 2;
+        }
+
+        .story-thumbnail {
+            width: 100%;
+            height: 220px;
+            background: linear-gradient(135deg, var(--card-dark) 0%, #16162a 50%, var(--card-dark) 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .story-thumbnail::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background:
+                repeating-linear-gradient(
+                    0deg,
+                    transparent,
+                    transparent 1px,
+                    rgba(0, 212, 255, 0.03) 1px,
+                    rgba(0, 212, 255, 0.03) 2px
+                ),
+                repeating-linear-gradient(
+                    90deg,
+                    transparent,
+                    transparent 1px,
+                    rgba(0, 212, 255, 0.03) 1px,
+                    rgba(0, 212, 255, 0.03) 2px
+                );
+            pointer-events: none;
+        }
+
+        .story-thumbnail svg {
+            width: 90px;
+            height: 90px;
+            opacity: 0.45;
+            filter: drop-shadow(0 0 18px var(--cyan-accent));
+            animation: float 7s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-12px); }
+        }
+
+        .story-content {
+            padding: 2rem;
+        }
+
+        .story-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: var(--text-light);
+            line-height: 1.4;
+        }
+
+        .story-summary {
+            font-size: 1.05rem;
+            color: var(--text-muted);
+            margin-bottom: 1.5rem;
+            line-height: 1.75;
+        }
+
+        /* Magnetic button effect */
+        .read-more {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.6rem;
+            color: var(--cyan-soft);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 1rem;
+            transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            padding: 0.75rem 1.25rem;
+            border: 1px solid rgba(0, 212, 255, 0.3);
+            border-radius: 8px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .read-more::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(0, 212, 255, 0.15), transparent);
+            transition: left 0.6s ease;
+        }
+
+        .read-more:hover {
+            color: var(--cyan-accent);
+            background: rgba(0, 212, 255, 0.12);
+            border-color: rgba(0, 212, 255, 0.5);
+            box-shadow: 0 0 30px rgba(0, 212, 255, 0.25);
+            text-decoration: none;
+        }
+
+        .read-more:hover::before {
+            left: 100%;
+        }
+
+        .read-more::after {
+            content: '→';
+            font-size: 1.2rem;
+            transition: transform 0.3s ease;
+        }
+
+        .read-more:hover::after {
+            transform: translateX(6px);
+        }
+
+        /* Industry Moves */
+        .moves-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1.75rem;
+        }
+
+        .move-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 1.5rem;
+            padding: 1.75rem;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--glass-border);
+            border-radius: 14px;
+            transition: all 0.4s ease;
+            position: relative;
+        }
+
+        .move-item::before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, var(--gold-soft), var(--cyan-accent));
+            transition: width 0.4s ease;
+            border-radius: 2px;
+        }
+
+        .move-item:hover {
+            background: rgba(255, 255, 255, 0.06);
+            transform: translateX(10px);
+            border-color: rgba(0, 212, 255, 0.4);
+            box-shadow: 0 12px 30px rgba(0, 212, 255, 0.12);
+        }
+
+        .move-item:hover::before {
+            width: 100%;
+        }
+
+        .move-icon {
+            font-size: 2rem;
+            flex-shrink: 0;
+            width: 60px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, rgba(201, 169, 89, 0.2), rgba(0, 212, 255, 0.2));
+            border: 1px solid rgba(201, 169, 89, 0.4);
+            border-radius: 14px;
+            box-shadow: 0 0 25px rgba(201, 169, 89, 0.2);
+        }
+
+        .move-text {
+            flex: 1;
+            font-size: 1.1rem;
+            line-height: 1.7;
+        }
+
+        .move-text strong {
+            color: var(--gold-soft);
+            font-weight: 600;
+        }
+
+        /* Research Spotlight */
+        .spotlight-card {
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid var(--glass-border);
+            border-radius: 14px;
+            padding: 2.5rem;
+            transition: all 0.4s ease;
+            position: relative;
+        }
+
+        .spotlight-card:hover {
+            transform: translateY(-8px);
+            background: rgba(255, 255, 255, 0.06);
+            box-shadow:
+                0 20px 50px rgba(0, 212, 255, 0.15),
+                0 0 0 1px rgba(255, 255, 255, 0.2);
+        }
+
+        .paper-title {
+            font-size: 1.75rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: var(--text-light);
+            line-height: 1.4;
+        }
+
+        .paper-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.6rem;
+            color: var(--cyan-soft);
+            text-decoration: none;
+            font-weight: 500;
+            margin-bottom: 1.5rem;
+            transition: all 0.4s ease;
+            padding: 0.75rem 1.25rem;
+            border-radius: 8px;
+            border: 1px solid rgba(0, 212, 255, 0.3);
+        }
+
+        .paper-link:hover {
+            color: var(--cyan-accent);
+            background: rgba(0, 212, 255, 0.12);
+            border-color: rgba(0, 212, 255, 0.5);
+            box-shadow: 0 0 30px rgba(0, 212, 255, 0.25);
+            text-decoration: none;
+        }
+
+        .paper-link::after {
+            content: '↗';
+            font-size: 1.3rem;
+        }
+
+        .paper-summary {
+            color: var(--text-muted);
+            line-height: 1.85;
+            font-size: 1.1rem;
+        }
+
+        /* Quick Takes */
+        .takes-list {
+            list-style: none;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .takes-list li {
+            position: relative;
+            padding-left: 2.25rem;
+            color: var(--text-light);
+            line-height: 1.75;
+            padding: 1rem 1rem 1rem 2.25rem;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 10px;
+            border-left: 3px solid var(--teal);
+            transition: all 0.3s ease;
+        }
+
+        .takes-list li:hover {
+            background: rgba(255, 255, 255, 0.06);
+            border-left-color: var(--cyan-accent);
+            transform: translateX(8px);
+            box-shadow: 0 8px 25px rgba(0, 212, 255, 0.1);
+        }
+
+        .takes-list li::before {
+            content: '⚡';
+            position: absolute;
+            left: 0.5rem;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 1.2rem;
+            filter: drop-shadow(0 0 10px var(--teal));
+        }
+
+        /* Footer with ambient glow and slower particle effect */
+        footer {
+            position: relative;
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-top: 1px solid var(--glass-border);
+            padding: 3.5rem 2rem;
+            text-align: center;
+            overflow: hidden;
+        }
+
+        footer::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background:
+                radial-gradient(circle at 30% 50%, var(--glow-cyan) 0%, transparent 45%),
+                radial-gradient(circle at 70% 50%, var(--glow-gold) 0%, transparent 45%);
+            opacity: 0.35;
+            pointer-events: none;
+            animation: ambientPulse 8s ease-in-out infinite alternate;
+        }
+
+        @keyframes ambientPulse {
+            0% { opacity: 0.25; transform: scale(1); }
+            100% { opacity: 0.5; transform: scale(1.03); }
+        }
+
+        /* CSS-only particle animation - slower */
+        .particles {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            overflow: hidden;
+        }
+
+        .particle {
+            position: absolute;
+            width: 3px;
+            height: 3px;
+            background: var(--cyan-accent);
+            border-radius: 50%;
+            box-shadow: 0 0 8px var(--cyan-accent);
+            animation: riseSlow 20s infinite linear;
+            opacity: 0;
+        }
+
+        .particle:nth-child(1) { left: 10%; animation-duration: 18s; animation-delay: 0s; }
+        .particle:nth-child(2) { left: 20%; animation-duration: 22s; animation-delay: 3s; }
+        .particle:nth-child(3) { left: 30%; animation-duration: 20s; animation-delay: 6s; }
+        .particle:nth-child(4) { left: 40%; animation-duration: 25s; animation-delay: 9s; }
+        .particle:nth-child(5) { left: 50%; animation-duration: 19s; animation-delay: 2s; }
+        .particle:nth-child(6) { left: 60%; animation-duration: 23s; animation-delay: 5s; }
+        .particle:nth-child(7) { left: 70%; animation-duration: 21s; animation-delay: 8s; }
+        .particle:nth-child(8) { left: 80%; animation-duration: 24s; animation-delay: 11s; }
+        .particle:nth-child(9) { left: 90%; animation-duration: 20s; animation-delay: 4s; }
+        .particle:nth-child(10) { left: 95%; animation-duration: 26s; animation-delay: 7s; }
+
+        @keyframes riseSlow {
+            0% {
+                transform: translateY(100vh) scale(0);
+                opacity: 0;
+            }
+            15% {
+                opacity: 0.6;
+            }
+            85% {
+                opacity: 0.6;
+            }
+            100% {
+                transform: translateY(-80px) scale(1);
+                opacity: 0;
+            }
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+            margin-bottom: 1.5rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .footer-links a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-weight: 500;
+            padding: 0.75rem 1.5rem;
+            border-radius: 10px;
+            border: 1px solid transparent;
+            transition: all 0.4s ease;
+        }
+
+        .footer-links a:hover {
+            color: var(--cyan-soft);
+            background: rgba(0, 212, 255, 0.1);
+            border-color: rgba(0, 212, 255, 0.4);
+            box-shadow: 0 0 25px rgba(0, 212, 255, 0.2);
+            text-decoration: none;
+        }
+
+        .copyright {
+            font-size: 0.95rem;
+            color: var(--text-muted);
+            opacity: 0.7;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .logo {
+                font-size: 2rem;
+                letter-spacing: 1px;
+            }
+
+            .logo::after {
+                display: none;
+            }
+
+            .container {
+                padding: 2rem 1rem 4rem;
+            }
+
+            section {
+                padding: 2rem;
+            }
+
+            h2 {
+                font-size: 1.8rem;
+            }
+
+            .stories-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+
+            .takes-list {
+                grid-template-columns: 1fr;
+            }
+
+            .footer-links {
+                gap: 1rem;
+            }
+
+            .story-title {
+                font-size: 1.3rem;
+            }
+        }
+
+        /* Smooth scroll offset */
+        :target::before {
+            content: "";
+            display: block;
+            height: 30px;
+            margin-top: -30px;
+        }
+
+        /* Selection highlight */
+        ::selection {
+            background: rgba(0, 212, 255, 0.3);
+            color: var(--text-light);
+        }
+
+        /* Focus styles for accessibility */
+        a:focus, button:focus {
+            outline: 2px solid var(--cyan-accent);
+            outline-offset: 3px;
+        }
+
+        /* Print styles */
+        @media print {
+            body::before, body::after, .content-scrim, footer::before, .particles {
+                display: none;
+            }
+            section {
+                break-inside: avoid;
+                background: white !important;
+                border: 1px solid #ccc !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="content-scrim"></div>
+
+    <header class="reveal">
+        <h1 class="logo">Pablo's AI News Hour</h1>
+        <div class="date" id="current-date"></div>
+        <p class="tagline">Your weekly dose of AI insights, breakthroughs, and industry intelligence</p>
+    </header>
+
+    <div class="container">
+        <!-- Top Stories -->
+        <section id="top-stories" class="reveal">
+            <h2>Top Stories</h2>
+            <div class="ornate-divider"></div>
+            <div class="stories-grid">
+                <article class="story-card">
+                    <div class="story-thumbnail">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                            <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </div>
+                    <div class="story-content">
+                        <h3 class="story-title">OpenAI Releases GPT-5 with Revolutionary Multimodal Reasoning</h3>
+                        <p class="story-summary">The latest iteration promises unprecedented capabilities in text, image, and video understanding, with improved safety features and 10x faster inference speeds.</p>
+                        <a href="#" class="read-more">Read more</a>
+                    </div>
+                </article>
+
+                <article class="story-card">
+                    <div class="story-thumbnail">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                            <circle cx="12" cy="12" r="10"/>
+                            <path d="M12 6v6l4 2"/>
+                        </svg>
+                    </div>
+                    <div class="story-content">
+                        <h3 class="story-title">Anthropic Introduces Claude 4 with Enhanced Constitutional AI</h3>
+                        <p class="story-summary">New safety protocols and transparency features set a new benchmark for responsible AI development in the enterprise sector.</p>
+                        <a href="#" class="read-more">Read more</a>
+                    </div>
+                </article>
+
+                <article class="story-card">
+                    <div class="story-thumbnail">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z"/>
+                            <path d="M12 8v8M8 12h8"/>
+                        </svg>
+                    </div>
+                    <div class="story-content">
+                        <h3 class="story-title">Google DeepMind's AlphaFold 3 Predicts Protein Interactions with Near-Perfect Accuracy</h3>
+                        <p class="story-summary">Breakthrough in structural biology could accelerate drug discovery by years, with immediate applications in cancer research.</p>
+                        <a href="#" class="read-more">Read more</a>
+                    </div>
+                </article>
+            </div>
+        </section>
+
+        <!-- Industry Moves -->
+        <section id="industry-moves" class="reveal">
+            <h2>Industry Moves</h2>
+            <div class="ornate-divider"></div>
+            <div class="moves-list">
+                <div class="move-item">
+                    <div class="move-icon">👔</div>
+                    <div class="move-text">
+                        <strong>Satya Nadella</strong> announces Microsoft's $10B investment in next-gen AI infrastructure, focusing on quantum-classical hybrid systems.
+                    </div>
+                </div>
+                <div class="move-item">
+                    <div class="move-icon">🚀</div>
+                    <div class="move-text">
+                        <strong>Elon Musk</strong> reveals xAI's Colossus supercomputer with 100,000 H100 GPUs, now operational for Grok model training.
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Research Spotlight -->
+        <section id="research-spotlight" class="reveal">
+            <h2>Research Spotlight</h2>
+            <div class="ornate-divider"></div>
+            <div class="spotlight-card">
+                <h3 class="paper-title">
+                    <a href="https://arxiv.org/abs/2403.12345" class="paper-link" target="_blank">Neural Symbolic Integration: Bridging Deep Learning and Logical Reasoning</a>
+                </h3>
+                <p class="paper-summary">
+                    This groundbreaking paper introduces a novel architecture that combines neural networks' pattern recognition strengths with symbolic AI's logical rigor. The researchers demonstrate how their hybrid system can solve complex reasoning tasks that stump pure deep learning models—from mathematical proofs to commonsense deduction—while maintaining interpretability. Early benchmarks show a 40% improvement on logic-intensive datasets with dramatically reduced hallucination rates.
+                </p>
+            </div>
+        </section>
+
+        <!-- Quick Takes -->
+        <section id="quick-takes" class="reveal">
+            <h2>Quick Takes</h2>
+            <div class="ornate-divider"></div>
+            <ul class="takes-list">
+                <li>Stability AI releases Stable Diffusion 3 with improved text rendering and coherent multi-subject generation.</li>
+                <li>EU AI Act enters enforcement phase with first fines issued for non-compliance in high-risk applications.</li>
+                <li>Open-source model Llama 4 achieves GPT-4 level performance at 1/10th the inference cost.</li>
+                <li>Apple announces significant reorganization of its AI division, focusing on on-device inference optimization.</li>
+            </ul>
+        </section>
+    </div>
+
+    <footer>
+        <div class="particles">
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+        </div>
+        <div class="footer-links">
+            <a href="#" onclick="alert('Subscribe functionality coming soon!')">Subscribe</a>
+            <a href="#" onclick="alert('Archive browsing coming soon!')">Archive</a>
+            <a href="#" onclick="alert('Feedback form coming soon!')">Feedback</a>
+        </div>
+        <p class="copyright">© 2025 Pablo's AI News Hour. All rights reserved.</p>
+    </footer>
+
+    <script>
+        // Set current date
+        document.getElementById('current-date').textContent = new Date().toLocaleDateString('en-US', {
+            weekday: 'long',
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric'
+        });
+
+        // Scroll-reveal animation
+        const observerOptions = {
+            threshold: 0.15,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.reveal').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Mouse tracking for card glow effect
+        document.querySelectorAll('.story-card').forEach(card => {
+            card.addEventListener('mousemove', (e) => {
+                const rect = card.getBoundingClientRect();
+                const x = ((e.clientX - rect.left) / rect.width) * 100;
+                const y = ((e.clientY - rect.top) / rect.height) * 100;
+                card.style.setProperty('--mouse-x', x + '%');
+                card.style.setProperty('--mouse-y', y + '%');
+            });
+        });
+
+        // Tilt effect for cards
+        document.querySelectorAll('.story-card, .spotlight-card').forEach(card => {
+            card.addEventListener('mousemove', (e) => {
+                const rect = card.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                const centerX = rect.width / 2;
+                const centerY = rect.height / 2;
+                const rotateX = (y - centerY) / 30;
+                const rotateY = (centerX - x) / 30;
+
+                card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+            });
+
+            card.addEventListener('mouseleave', () => {
+                card.style.transform = 'perspective(1000px) rotateX(0) rotateY(0)';
+            });
+        });
+
+        // Magnetic button effect
+        document.querySelectorAll('.read-more, .paper-link').forEach(btn => {
+            btn.addEventListener('mousemove', (e) => {
+                const rect = btn.getBoundingClientRect();
+                const x = e.clientX - rect.left - rect.width / 2;
+                const y = e.clientY - rect.top - rect.height / 2;
+                const distance = Math.sqrt(x * x + y * y);
+                const maxDistance = 100;
+                const strength = Math.max(0, 1 - distance / maxDistance);
+                const moveX = x * strength * 0.3;
+                const moveY = y * strength * 0.3;
+
+                btn.style.transform = `translate(${moveX}px, ${moveY}px)`;
+            });
+
+            btn.addEventListener('mouseleave', () => {
+                btn.style.transform = 'translate(0, 0)';
+            });
+        });
+
+        // Smooth scroll to sections
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
